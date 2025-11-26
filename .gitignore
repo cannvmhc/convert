@@ -1,0 +1,14 @@
+.env
+venv/
+logs/
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+data/*.xlsx
+!data/sample*.xlsx

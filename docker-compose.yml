@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  # Flow 1: Import Excel files to database
+  app-import:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: file-processor-import
+    restart: unless-stopped
+    command: python src/main.py --flow import
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data  # Mount directory for Excel files
+    # depends_on:
+    #   - mysql
+    #   - redis
+    networks:
+      - app-network
+
+  # # Flow 2: Process data from database
+  # app-process:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: file-processor-process
+  #   restart: unless-stopped
+  #   command: python src/main.py --flow process
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./logs:/app/logs
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #   networks:
+  #     - app-network
+
+  # # MySQL database
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: file-processor-mysql
+  #   restart: unless-stopped
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-rootpassword}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE:-fileprocessor}
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql-data:/var/lib/mysql
+  #     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  #   networks:
+  #     - app-network
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+
+  # Redis cache
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: file-processor-redis
+  #   restart: unless-stopped
+  #   command: redis-server --appendonly yes
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  # mysql-data:
+  # redis-data:
