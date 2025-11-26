@@ -24,26 +24,6 @@ File (status=0) → Download → Parse Excel → Insert to excel_data table → 
 excel_data (status=0) → Check duplicates → Process by type → Update excel_data status
 ```
 
-## Cấu trúc Database
-
-### Bảng `files` (Upload tracking)
-| Column | Type | Description |
-|--------|------|-------------|
-| id | INT | Primary key |
-| file_path | VARCHAR(500) | URL hoặc đường dẫn file Excel |
-| type | VARCHAR(50) | Loại file (type1, type2, default) |
-| status | INT | 0=pending import, 1=imported, 2=error |
-| total_rows | INT | Tổng số rows đã import |
-
-### Bảng `excel_data` (Imported rows)
-| Column | Type | Description |
-|--------|------|-------------|
-| id | INT | Primary key |
-| upload_id | INT | Foreign key to files.id |
-| sheet_name | VARCHAR(100) | Tên sheet trong Excel |
-| row_index | INT | Số thứ tự row (1-based) |
-| row_data | JSON | Data của row: `{"header1": "value1", ...}` |
-| status | INT | 0=pending, 1=processed, 2=error |
 
 ## Cài đặt
 

@@ -131,7 +131,7 @@ class FileDownloader:
         Returns:
             Path to downloaded/copied file in temp directory
         """
-        path = f"http://127.0.0.1:8000/storage/{path}"
+        path = f"http://123.31.41.102:4953/{path}"
         if self._is_url(path):
             return self.download_from_url(path, filename)
         else:
