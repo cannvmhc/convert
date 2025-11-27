@@ -67,7 +67,3 @@ services:
   #     - redis-data:/data
   #   networks:
   #     - app-network
-
-networks:
-  app-network:
-    driver: bridge
