@@ -64,7 +64,7 @@ class MySQLClient:
         
         try:
             with self._connection.cursor() as cursor:
-                query = "SELECT * FROM uploads WHERE status = 0 and id = 25"
+                query = "SELECT * FROM uploads WHERE status = 0"
                 if limit:
                     query += f" LIMIT {limit}"
                 
